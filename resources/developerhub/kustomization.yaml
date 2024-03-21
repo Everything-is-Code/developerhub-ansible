@@ -6,3 +6,4 @@ resources:
 - 00_developerhub_namespace.yaml
 - 01_developerhub_operatorgroup.yaml
 - 02_developerhub_subscription.yaml
+- 03_developerhub_instance.yaml
