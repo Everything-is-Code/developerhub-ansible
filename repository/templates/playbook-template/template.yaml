@@ -18,7 +18,6 @@ spec:
       - orgName
       - repoName
       - owner
-      - system
     properties:
       orgName:
         title: Organization Name
@@ -39,14 +38,6 @@ spec:
             kind:
               - Group
               - User
-        system:
-          title: System
-          type: string
-          ui:field: EntityPicker
-          ui:options:
-            catalogFilter:
-              kind:
-                - System
 
   steps:
     - id: sourceCodeTemplate
