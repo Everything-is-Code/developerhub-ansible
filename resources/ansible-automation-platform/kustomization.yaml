@@ -8,3 +8,4 @@ resources:
 - 02_subscription.yaml
 - 03_admin-credential.yaml
 - 04_instance.yaml
+- 05_automationhub.yaml
