@@ -4,3 +4,4 @@ commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 resources:
 - 00_developerhub-ansible.yaml
+- 01_gitea.yaml

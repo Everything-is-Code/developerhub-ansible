@@ -36,6 +36,6 @@ spec:
       source:
         repoURL: https://github.com/Everything-is-Code/developerhub-ansible.git
         targetRevision: main
-        path: resources/gitea-operator/
+        path: resources/gitea/
       destination:
         server: https://kubernetes.default.svc
