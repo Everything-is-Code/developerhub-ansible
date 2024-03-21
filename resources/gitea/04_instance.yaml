@@ -1,0 +1,11 @@
+apiVersion: pfe.rhpds.com/v1
+kind: Gitea
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: gitea
+  namespace: gitea-operator
+spec:
+  giteaSsl: true
+  giteaVolumeSize: 4Gi
+  postgresqlVolumeSize: 4Gi

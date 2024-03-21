@@ -7,3 +7,4 @@ resources:
 - 01_namespace.yaml
 - 02_operatorgroup.yaml
 - 03_subscription.yaml
+- 04_instance.yaml
