@@ -7,4 +7,4 @@ resources:
 - 01_operatorgroup.yaml
 - 02_subscription.yaml
 - 03_admin-credential.yaml
-- 03_instance.yaml
+- 04_instance.yaml
