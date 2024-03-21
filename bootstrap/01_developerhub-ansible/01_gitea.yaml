@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: gitea-operator
+  name: gitea
   namespace: openshift-gitops
 spec:
   clusterResourceWhitelist:
@@ -17,7 +17,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: gitea-operator
+  name: gitea
   namespace: openshift-gitops
 spec:
   generators:
@@ -26,9 +26,9 @@ spec:
       - cluster: in-cluster
   template:
     metadata:
-      name: gitea-operator-{{cluster}}
+      name: gitea-{{cluster}}
     spec:
-      project: gitea-operator
+      project: gitea
       syncPolicy:
         automated:
           prune: true
