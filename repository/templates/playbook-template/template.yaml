@@ -1,0 +1,108 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: playbook-template
+  title: Template for Ansible Playbooks
+  description: Create a starter Ansible Playbook with Q&A control Pipeline for usage in Openshift Dev Spaces.
+  tags:
+    - playbook
+    - git
+    - ansible
+spec:
+  owner: Red Hat
+  system: developerhub
+  type: service
+  parameters:
+  - title: Instanciate a new repository of code for Ansible Playbooks
+    required:
+      - orgName
+      - repoName
+      - owner
+      - system
+    properties:
+      orgName:
+        title: Organization Name
+        type: string
+      repoName:
+        title: Repository Name
+        type: string
+      description:
+        title: Description
+        type: string
+        description: Help others understand what this component is for
+      owner:
+        title: Owner
+        type: string
+        ui:field: EntityPicker
+        ui:options:
+          catalogFilter:
+            kind:
+              - Group
+              - User
+        system:
+          title: System
+          type: string
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind:
+                - System
+
+  steps:
+    - id: sourceCodeTemplate
+      name: Generating the Source Code Component
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          orgName: ${{ parameters.orgName }}
+          repoName: ${{ parameters.repoName }}
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          description: ${{ parameters.description }}
+          namespace: ${{ parameters.namespace }}
+          imageUrl: ${{ parameters.imageUrl }}
+          imageRepository: ${{ parameters.imageRepository }}
+          ci: ${{ parameters.ci }}
+          sourceControl: ${{ scm }}
+
+    - id: catalogTemplate
+      name: Generating the Catalog Info Component
+      action: fetch:template
+      input:
+        url: ../../../skeletons/catalog-info/
+        values:
+          orgName: ${{ parameters.orgName }}
+          repoName: ${{ parameters.repoName }}
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          description: ${{ parameters.description }}
+          namespace: ${{ parameters.namespace }}
+          imageUrl: ${{ parameters.imageUrl }}
+          imageRepository: ${{ parameters.imageRepository }}
+          ci: ${{ parameters.ci }}
+          sourceControl: ${{ scm }}
+
+    - id: publish
+      name: Publishing to the Source Code Repository
+      action: publish:gitea
+      input:
+        allowedHosts: ['${{ scm }}']
+        description: ${{ parameters.description }}
+        repoUrl: ${{ scm }}?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}
+        defaultBranch: main
+
+    - id: register
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+  output:
+    links:
+      - title: Open the Source Code Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open the Catalog Info Component
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
