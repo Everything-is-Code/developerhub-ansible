@@ -8,3 +8,13 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   name: gitea-operator
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: gitea
+    openshift.io/cluster-monitoring: "true"
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: gitea
