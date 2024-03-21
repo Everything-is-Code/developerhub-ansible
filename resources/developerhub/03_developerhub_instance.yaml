@@ -1,8 +1,22 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: developer-hub
+    openshift.io/cluster-monitoring: "true"
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: developer-hub
+spec: {}
+---
 apiVersion: rhdh.redhat.com/v1alpha1
 kind: Backstage
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
   name: developer-hub
-  namespace: rhdh-operator
+  namespace: developer-hub
 spec:
   application:
     appConfig:
